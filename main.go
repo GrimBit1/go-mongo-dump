@@ -7,6 +7,7 @@ import (
 	"net"
 	"os"
 	"os/exec"
+	"sync"
 	"time"
 
 	"go.mongodb.org/mongo-driver/v2/bson"
@@ -38,7 +39,7 @@ func main() {
 	}
 	fmt.Println(len(users))
 	timeNow := time.Now().UnixMilli()
-	InsertOne(users)
+	InsertMany(users)
 	// MongoRestore()
 	fmt.Println(time.Now().UnixMilli()-timeNow, "ms")
 	// DeleteColl("users")
@@ -52,12 +53,25 @@ func InsertMany(users []User) {
 	}
 	db := conn.Database("test")
 	usersColl := db.Collection("users")
-	res, err := usersColl.InsertMany(context.TODO(), users, options.InsertMany().SetOrdered(false))
-	if err != nil {
-		fmt.Println(err)
-		return
+	wg := sync.WaitGroup{}
+	batch := 1
+	for i := 0; i < len(users); i += batch {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			j := i + batch
+			if j > len(users) {
+				j = len(users)
+			}
+			_, err := usersColl.InsertOne(context.TODO(), users[i], options.InsertOne())
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+			// fmt.Println(res.Acknowledged)
+		}()
 	}
-	fmt.Println(res.Acknowledged)
+	wg.Wait()
 }
 func InsertOne(users []User) {
 	conn, err := mongo.Connect(options.Client().ApplyURI(uri))
