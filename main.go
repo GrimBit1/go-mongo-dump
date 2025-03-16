@@ -23,7 +23,7 @@ func main() {
 	fmt.Println(len(users))
 	timeNow := time.Now().UnixMilli()
 	// InsertMany(users)
-	utils.FindByID()
+	utils.FindByRegex()
 	// MongoRestore()
 	fmt.Println(time.Now().UnixMilli()-timeNow, "ms")
 	// DeleteColl("users")

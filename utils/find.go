@@ -47,12 +47,10 @@ func Find() {
 
 func FindByID() {
 	// If you still want to list all users, call it here.
-	ListUsers()
 
 	coll, err := UsersColl()
 	if err != nil {
-
-		fmt.Println("This error", err)
+		fmt.Println(err)
 		return
 	}
 
@@ -81,30 +79,30 @@ func FindByID() {
 	// user.NormalizeIP()
 	// You may want to do further processing here.
 }
-func ListUsers() {
+
+func FindByRegex() {
 	coll, err := UsersColl()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-
-	cursor, err := coll.Find(context.Background(), bson.D{})
+	var user []User
+	cursor, err := coll.Find(context.Background(), bson.M{
+		"first_name": bson.M{
+			"$regex":   "^A",
+			"$options": "i",
+		},
+	})
 	if err != nil {
-		fmt.Println("Error listing users:", err)
+		fmt.Println(err)
 		return
 	}
-	defer cursor.Close(context.Background())
 
-	for cursor.Next(context.Background()) {
-		var user User
-		if err := cursor.Decode(&user); err != nil {
-			fmt.Println("Decode error:", err)
-			continue
-		}
-		fmt.Printf("%#v\n", user.Id.String())
+	err = cursor.All(context.Background(), &user)
+	if err != nil {
+		fmt.Println(err)
 		return
 	}
-	if err := cursor.Err(); err != nil {
-		fmt.Println("Cursor error:", err)
-	}
+	fmt.Println(len(user))
+
 }

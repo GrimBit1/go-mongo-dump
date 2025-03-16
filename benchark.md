@@ -34,6 +34,10 @@
 
 9 ms (0.009 s) -- no cpu or memory limit
 
+## Find By Regex
+
+444 ms (0.444 s) -- no cpu or memory limit
+
 ## Node JS Insert
 
 ## Insert Many
@@ -61,6 +65,10 @@
 ## Find by Id
 
 12.217ms (0.012217s) -- no cpu or memory limit
+
+## Find By Regex
+
+895.773ms (0.895773s) -- no cpu or memory limit
 
 ## Mongo Import
 

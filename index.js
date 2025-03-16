@@ -49,4 +49,16 @@ const FindById = async () => {
     console.log(users)
     console.timeEnd("Finding")
 }
-FindById()
+const FindByRegex = async () => {
+    await mongoose.connect("mongodb://root:example@localhost:27017/")
+    console.time("Finding")
+    const users = await UserModel.find({
+        "first_name": {
+            "$regex": "^A",
+            "$options": "i",
+        },
+    })
+    console.log(users.length)
+    console.timeEnd("Finding")
+}
+FindByRegex()
