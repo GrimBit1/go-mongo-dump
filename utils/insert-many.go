@@ -5,18 +5,16 @@ import (
 	"fmt"
 	"sync"
 
-	"go.mongodb.org/mongo-driver/v2/mongo"
 	"go.mongodb.org/mongo-driver/v2/mongo/options"
 )
 
 func InsertMany(users []User) {
-	conn, err := mongo.Connect(options.Client().ApplyURI(uri))
+
+	usersColl, err := UsersColl()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	db := conn.Database("test")
-	usersColl := db.Collection("users")
 	wg := sync.WaitGroup{}
 	batch := 10000
 	for i := 0; i < len(users); i += batch {

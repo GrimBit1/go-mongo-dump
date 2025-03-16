@@ -8,7 +8,7 @@ const User = new mongoose.Schema({
     ip_address: String
 })
 const UserModel = mongoose.model("users", User)
-const main = async () => {
+const InsertMany = async () => {
     await mongoose.connect("mongodb://root:example@localhost:27017/")
     const BATCH_SIZE = 100000;
     const batch = []
@@ -25,4 +25,28 @@ const main = async () => {
     console.timeEnd("Inserting")
     // console.log('Done', res)
 }
-main()
+const Find = async () => {
+    await mongoose.connect("mongodb://root:example@localhost:27017/")
+    console.time("Finding")
+    const users = await UserModel.find()
+    console.log(users[0])
+    console.timeEnd("Finding")
+}
+
+const FindByName = async () => {
+    await mongoose.connect("mongodb://root:example@localhost:27017/")
+    console.time("Finding")
+    const users = await UserModel.findOne({
+        first_name: 'Myrtia'
+    })
+    console.log(users)
+    console.timeEnd("Finding")
+}
+const FindById = async () => {
+    await mongoose.connect("mongodb://root:example@localhost:27017/")
+    console.time("Finding")
+    const users = await UserModel.findById("67cdb7acfb3bc8b95b8d7208")
+    console.log(users)
+    console.timeEnd("Finding")
+}
+FindById()

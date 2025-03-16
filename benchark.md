@@ -13,13 +13,26 @@
 2578 ms (2.58 s) -- 2 cpu, 512Mi memory limit
 
 ### With Batches
+
 100000= 939 ms (0.939 s)
 10000 = 902 ms (0.902 s)
-1000  = 1066 ms (1.066 s)
+1000 = 1066 ms (1.066 s)
 
 ## Insert One (With Loop)
 
 50918 ms (50.9 s) -- no cpu or memory limit (cpu constant 0.5 | mem = 500 mb)
+
+## Find All
+
+2831 ms (2.83 s) -- no cpu or memory limit
+
+## Find By Name
+
+10 ms (0.01 s) -- no cpu or memory limit
+
+## Find by Id
+
+9 ms (0.009 s) -- no cpu or memory limit
 
 ## Node JS Insert
 
@@ -28,13 +41,26 @@
 14169 ms (14.1 s) -- no cpu or memory limit
 
 ### With Batches
+
 100000= 12087 ms (12.087 s)
 10000 = 12388 ms (12.388 s)
-1000  = 22093 ms (22.093 s)
+1000 = 22093 ms (22.093 s)
 
 ## Insert One (With Loop)
 
 165409 ms (165.4 s) -- no cpu or memory limit (cpu constant 0.5 | mem = 500 mb)
+
+## Find All
+
+7521ms (7.521s) -- no cpu or memory limit
+
+## Find By Name
+
+13.148ms (0.013148s) -- no cpu or memory limit
+
+## Find by Id
+
+12.217ms (0.012217s) -- no cpu or memory limit
 
 ## Mongo Import
 
